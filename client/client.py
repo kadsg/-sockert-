@@ -38,7 +38,8 @@ class FileCompressorApp:
         except FileNotFoundError:
             print("操作取消！")
         finally:
-            self.compressor.close_connection()  # 关闭连接
+            if self.compressor.client_socket:
+                self.compressor.client_socket.close()
 
 
 def main():
@@ -50,7 +51,7 @@ def main():
         app.run()  # 启动客户端
 
         # 询问用户是否继续
-        choice = input("是否继续？(y/n)")
+        choice = input("是否继续？，按n退出，其他任意键继续：")
         if choice == 'n':
             break
     print("客户端已退出！")

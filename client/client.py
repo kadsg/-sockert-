@@ -11,7 +11,8 @@ class FileCompressorApp:
         self.compressor = business.ClientBusiness(self.host, self.port)  # 创建FileCompressor对象
 
     # 保存压缩文件
-    def save_compressed_file(self, compressed_data, options):
+    @staticmethod
+    def save_compressed_file(compressed_data, options):
         if compressed_data:
             root = tkinter.Tk()
             root.withdraw()
@@ -32,7 +33,7 @@ class FileCompressorApp:
             # 获取用户选择的文件路径
             file_path = filedialog.askopenfilename()
 
-            compressed_data, options = self.compressor.handle(file_path) # 发送文件并接收压缩数据
+            compressed_data, options = self.compressor.handle(file_path)  # 发送文件并接收压缩数据
 
             self.save_compressed_file(compressed_data, options)  # 保存压缩文件
         except FileNotFoundError:

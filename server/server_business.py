@@ -1,4 +1,3 @@
-import zipfile
 import socket
 
 
@@ -16,12 +15,14 @@ class ServerBusiness:
         return self.server_socket
 
     # 接收客户端发送的文件名
-    def receive_file_name(self, client_socket):
+    @staticmethod
+    def receive_file_name(client_socket):
         filename = client_socket.recv(1024).decode()
         return filename
 
     # 接收客户端发送的文件
-    def receive_file(self, client_socket, file_path):
+    @staticmethod
+    def receive_file(client_socket, file_path):
         with open(file_path, 'wb') as f:
             while True:
                 data = client_socket.recv(1024)
@@ -35,17 +36,14 @@ class ServerBusiness:
 
     # 对文件进行压缩后保存到临时目录中
     # 返回压缩后的文件路径
-    def compress_file(self, file_path):
+    @staticmethod
+    def compress_file(file_path):
         # 压缩文件
-        # TODO: 写定为zip压缩，后续可以考虑使用其他压缩算法
-        compressed_file_path = file_path + '.zip'
-        with zipfile.ZipFile(compressed_file_path, mode='w', compression=zipfile.ZIP_DEFLATED) as compressed_data:
-            compressed_data.write(file_path)
-
-        return compressed_file_path
+        pass  # 由子类实现
 
     # 向客户端发送压缩后的文件
-    def send_compressed_file(self, client_socket, file_path):
+    @staticmethod
+    def send_compressed_file(client_socket, file_path):
         with open(file_path, 'rb') as f:
             while True:
                 data = f.read(1024)

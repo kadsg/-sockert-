@@ -1,6 +1,7 @@
 import os
 import shutil
 import server_business as business
+from server.business_zip import BusinessZIP
 
 
 # 服务端
@@ -9,7 +10,8 @@ class Server:
         self.host = host  # 监听的IP地址，为空则表示监听本机所有IP
         self.port = port  # 监听的端口号
         self.server_socket = None  # 服务端socket
-        self.business = business.ServerBusiness(host, port)
+        # 此处可更换压缩策略
+        self.business = BusinessZIP(self.host, self.port)  # 服务端业务逻辑
 
     def start(self):
         self.server_socket = self.business.open_server()  # 启动服务
